@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="listener"
+            type="com.example.practice.data.adapters.IAdapterListener" />
+
+        <variable
+            name="model"
+            type="com.example.practice.data.firebase.firestore.Product" />
+
+        <variable
+            name="position"
+            type="Integer" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/margin_medium"
+            android:layout_marginEnd="@dimen/margin_large"
+            android:layout_marginStart="@dimen/margin_large"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:onClick="@{() -> listener.onProductAdapterListener(model, position)}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/margin_medium">
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/CardTitle"
+                    android:id="@+id/tvProductName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@{model.name}"
+                    app:layout_constraintEnd_toStartOf="@id/ivAdd"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Nombre del producto"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvDescriptionProduct"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:text="@{model.short_description}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvProductName"
+                    tools:text="Descripción corta del producto"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivAdd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/margin_min"
+                    app:srcCompat="@drawable/ic_add_cart"
+                    app:layout_constraintBottom_toBottomOf="@id/tvProductName"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tvProductName" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

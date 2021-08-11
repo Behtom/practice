@@ -14,10 +14,33 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="DescriptionTitleLabel" parent="Widget.MaterialComponents.TextView">
+        <item name="android:gravity">start</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/text_title</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="DescriptionLabel" parent="Widget.MaterialComponents.TextView">
+        <item name="android:gravity">start</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/text_label</item>
+    </style>
     <style name="TextTitleLabel" parent="Widget.MaterialComponents.TextView">
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/text_title</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="TextLabel" parent="Widget.MaterialComponents.TextView">
+        <item name="android:gravity">start</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/text_label</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+    <style name="CardTitle" parent="Widget.MaterialComponents.TextView">
+        <item name="android:gravity">start</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/text_label</item>
         <item name="android:textStyle">bold</item>
     </style>
 </resources>

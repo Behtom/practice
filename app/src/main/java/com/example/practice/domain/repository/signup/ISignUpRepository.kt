@@ -1,4 +1,4 @@
-package com.example.practice.domain.repository
+package com.example.practice.domain.repository.signup
 
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult

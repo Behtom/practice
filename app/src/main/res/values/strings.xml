@@ -12,7 +12,7 @@
     <string name="text_password">Contraseña</string>
     <string name="text_signin">Iniciar sesión</string>
     <string name="text_signup">Registrarse</string>
-    <string name="text_helper_email">Ingresa o valida tu correo electrónico</string>
+    <string name="text_helper_email">Ingresa un correo electrónico válido</string>
     <string name="text_input_password">Crea tu contraseña</string>
     <string name="text_input_confirm_password">Confirma tu contraseña</string>
 </resources>

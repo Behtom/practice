@@ -20,8 +20,7 @@ class SignUpActivity : BaseActivity() {
 
         nextFragment(
             EmailFragment.newInstance(),
-            EmailFragment.TAG,
-            false
+            EmailFragment.TAG
         )
     }
 }

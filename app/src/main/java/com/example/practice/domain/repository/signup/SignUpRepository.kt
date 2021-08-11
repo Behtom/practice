@@ -1,6 +1,7 @@
-package com.example.practice.domain.repository
+package com.example.practice.domain.repository.signup
 
 import com.example.practice.data.firebase.authentication.email_auth.IEmailAuthManager
+import com.example.practice.domain.repository.signup.ISignUpRepository
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import javax.inject.Inject

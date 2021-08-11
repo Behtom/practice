@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.practice.R
 import com.example.practice.core.application.BaseApplication
@@ -26,6 +27,9 @@ class EmailFragment : BaseFragment(), View.OnClickListener {
         activity?.run { ViewModelProviders.of(this, factory)[SignUpVM::class.java] }
             ?: throw Exception("Invalid Activity")
     }
+    private val errorObserver = Observer<String> { value ->
+        binding.inputLayoutEmail.error = value
+    }
 
     override fun onAttach(context: Context) {
         (context.applicationContext as BaseApplication).appComponent.inject(this)
@@ -46,15 +50,19 @@ class EmailFragment : BaseFragment(), View.OnClickListener {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        signupVM.signupEmailError.observe(viewLifecycleOwner, errorObserver)
+    }
+
     override fun onClick(v: View?) {
         if (signupVM.isValidEmail()) {
             (requireActivity() as BaseActivity).nextFragment(
                 CreatePasswordFragment.newInstance(),
-                CreatePasswordFragment.TAG,
-                false
+                CreatePasswordFragment.TAG
             )
         } else {
-            signupVM.setEmailHelper(getString(R.string.text_helper_email))
+            signupVM.setEmailError(getString(R.string.text_helper_email))
         }
     }
 

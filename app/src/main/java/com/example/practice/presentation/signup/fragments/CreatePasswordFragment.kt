@@ -65,7 +65,6 @@ class CreatePasswordFragment : BaseFragment(), View.OnClickListener {
                     }
                 }
             }
-            binding.loaderContainer.hide()
         } else {
             Toast.makeText(requireContext(), "Valida tu contraseña.", Toast.LENGTH_LONG).show()
         }

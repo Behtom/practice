@@ -1,8 +1,6 @@
 package com.example.practice.data.firebase.authentication.email_auth
 
-import com.example.practice.core.application.BaseApplication
 import com.google.android.gms.tasks.Task
-import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import javax.inject.Inject
