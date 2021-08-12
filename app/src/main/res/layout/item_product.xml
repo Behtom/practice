@@ -65,6 +65,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/margin_min"
+                    android:onClick="@{() -> listener.addProductToCart(model)}"
                     app:srcCompat="@drawable/ic_add_cart"
                     app:layout_constraintBottom_toBottomOf="@id/tvProductName"
                     app:layout_constraintEnd_toEndOf="parent"

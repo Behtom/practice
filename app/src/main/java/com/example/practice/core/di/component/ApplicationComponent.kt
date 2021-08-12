@@ -6,6 +6,7 @@ import com.example.practice.presentation.home.HomeActivity
 import com.example.practice.presentation.home.di.HomeModule
 import com.example.practice.presentation.home.fragments.DetailFragment
 import com.example.practice.presentation.home.fragments.ProductsFragment
+import com.example.practice.presentation.home.fragments.ShoppingCartFragment
 import com.example.practice.presentation.login.LoginActivity
 import com.example.practice.presentation.login.di.LoginModule
 import com.example.practice.presentation.signup.SignUpActivity
@@ -31,4 +32,5 @@ interface ApplicationComponent {
     fun inject(fragment:CreatePasswordFragment)
     fun inject(fragment:ProductsFragment)
     fun inject(fragment:DetailFragment)
+    fun inject(fragment:ShoppingCartFragment)
 }

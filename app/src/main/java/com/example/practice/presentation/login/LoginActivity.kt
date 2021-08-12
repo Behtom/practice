@@ -12,6 +12,8 @@ import com.example.practice.databinding.ActivityLoginBinding
 import com.example.practice.presentation.home.HomeActivity
 import com.example.practice.presentation.login.viewmodel.LoginVM
 import com.example.practice.presentation.login.viewmodel.LoginVMFactory
+import com.example.practice.utils.extensions.hide
+import com.example.practice.utils.extensions.show
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -39,6 +41,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
+        binding.loaderContainer.show()
         MainScope().launch {
             when (val result = loginVM.doLogin()) {
                 is ConnectionState.Success -> {
@@ -52,5 +55,6 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                 }
             }
         }
+        binding.loaderContainer.hide()
     }
 }

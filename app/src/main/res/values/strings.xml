@@ -15,4 +15,5 @@
     <string name="text_helper_email">Ingresa un correo electrónico válido</string>
     <string name="text_input_password">Crea tu contraseña</string>
     <string name="text_input_confirm_password">Confirma tu contraseña</string>
+    <string name="text_go_cart">Ver carrito</string>
 </resources>

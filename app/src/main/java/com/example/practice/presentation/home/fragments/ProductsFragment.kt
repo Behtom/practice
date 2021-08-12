@@ -19,12 +19,13 @@ import com.example.practice.data.network.ConnectionState
 import com.example.practice.databinding.FragmentProductsBinding
 import com.example.practice.presentation.home.viewmodel.HomeVM
 import com.example.practice.presentation.home.viewmodel.HomeVMFactory
+import com.example.practice.utils.showLongToast
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import java.lang.Exception
 import javax.inject.Inject
 
-class ProductsFragment : BaseFragment(), IAdapterListener<Product> {
+class ProductsFragment : BaseFragment(), IAdapterListener<Product>, View.OnClickListener {
 
     @Inject lateinit var factory: HomeVMFactory
     private lateinit var binding: FragmentProductsBinding
@@ -46,6 +47,7 @@ class ProductsFragment : BaseFragment(), IAdapterListener<Product> {
     ): View {
         binding = FragmentProductsBinding.inflate(inflater, container, false).also {
             it.lifecycleOwner = this
+            it.onClickListener = this
         }
         return binding.root
     }
@@ -56,22 +58,13 @@ class ProductsFragment : BaseFragment(), IAdapterListener<Product> {
         MainScope().launch {
             when (val result = homeVM.getAllProductsFromRemote()) {
                 is ConnectionState.Success -> {
-                    Toast.makeText(requireContext(), result.response.message, Toast.LENGTH_LONG).show()
-                    val documents = result.response.querySnapshot?.documents
-
-                    if (documents != null && documents.isNotEmpty()) {
-                        val list = mutableListOf<Product>()
-                        documents.forEach { value ->
-                            list.add(value.toObject(Product::class.java)!!)
-                            Log.d("PracticeLog", value.toObject(Product::class.java).toString())
-                        }
-                        binding.recyclerview.adapter = ProductAdapter(requireContext(), this@ProductsFragment).also {
-                            it.setData(list)
-                        }
+                    requireContext().showLongToast(result.response.message?:"")
+                    binding.recyclerview.adapter = ProductAdapter(requireContext(), this@ProductsFragment).also {
+                        it.setData(result.response.list?:listOf())
                     }
                 }
                 is ConnectionState.Error -> {
-                    Toast.makeText(requireContext(), result.response.message, Toast.LENGTH_LONG).show()
+                    requireContext().showLongToast(result.response.message?:"")
                 }
             }
         }
@@ -82,6 +75,18 @@ class ProductsFragment : BaseFragment(), IAdapterListener<Product> {
         (requireActivity() as BaseActivity).nextFragment(
             DetailFragment.newInstance(),
             DetailFragment.TAG
+        )
+    }
+
+    override fun addProductToCart(model: Product) {
+        val result = homeVM.addProductToCart(model)
+        requireContext().showLongToast(result)
+    }
+
+    override fun onClick(v: View?) {
+        (requireActivity() as BaseActivity).nextFragment(
+            ShoppingCartFragment.newInstance(),
+            ShoppingCartFragment.TAG
         )
     }
 

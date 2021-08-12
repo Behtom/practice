@@ -8,9 +8,12 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
 import com.example.practice.core.application.BaseApplication
 import com.example.practice.core.base.BaseFragment
+import com.example.practice.data.adapters.IAdapterListener
+import com.example.practice.data.firebase.firestore.Product
 import com.example.practice.databinding.FragmentDetailBinding
 import com.example.practice.presentation.home.viewmodel.HomeVM
 import com.example.practice.presentation.home.viewmodel.HomeVMFactory
+import com.example.practice.utils.showLongToast
 import javax.inject.Inject
 
 class DetailFragment : BaseFragment() {
@@ -32,12 +35,20 @@ class DetailFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentDetailBinding.inflate(inflater, container, false).also {
             it.lifecycleOwner = this
             it.viewModel = homeVM
         }
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.ivAdd.setOnClickListener {
+            val result = homeVM.addProductToCart(homeVM.homeProduct.value?:Product())
+            requireContext().showLongToast(result)
+        }
     }
 
     companion object {

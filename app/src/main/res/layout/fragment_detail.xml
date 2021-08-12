@@ -71,7 +71,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/margin_medium"
-                android:text='@{"Precio: "  + Converter.amountToString(viewModel.homeProduct.price)}'
+                android:text='@{"Precio: " + Converter.amountToString(viewModel.homeProduct.price)}'
                 app:layout_constraintTop_toBottomOf="@id/headerContainer"/>
             <com.google.android.material.textview.MaterialTextView
                 style="@style/DescriptionLabel"
@@ -80,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:padding="@dimen/margin_medium"
                 android:text='@{"Existencia: "  + viewModel.homeProduct.count}'
-                app:layout_constraintTop_toBottomOf="@id/headerContainer"/>
+                app:layout_constraintTop_toBottomOf="@id/tvPriceProduct"/>
             <com.google.android.material.textview.MaterialTextView
                 style="@style/DescriptionLabel"
                 android:id="@+id/tvProductDescription"

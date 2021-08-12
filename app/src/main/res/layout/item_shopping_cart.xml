@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.example.practice.utils.tools.Converter" />
+
+        <variable
+            name="context"
+            type="android.content.Context" />
+
+        <variable
+            name="model"
+            type="com.example.practice.data.firebase.firestore.Product" />
+
+        <variable
+            name="listener"
+            type="com.example.practice.data.adapters.IAdapterListener" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_medium"
+            android:layout_marginEnd="@dimen/margin_large"
+            android:layout_marginStart="@dimen/margin_large"
+            android:layout_marginTop="@dimen/margin_medium"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/margin_medium">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    style="@style/IconTint"
+                    android:id="@+id/ivProductIcon"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:src="@{Converter.getDrawable(model.icon, context)}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:srcCompat="@drawable/ic_laptop" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/CartTitleLabel"
+                    android:id="@+id/tvProductName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_small"
+                    android:text="@{model.name}"
+                    app:layout_constraintStart_toEndOf="@id/ivProductIcon"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Nombre del producto"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/CartLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_small"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:text='@{"Precio: " + Converter.amountToString(model.price)}'
+                    app:layout_constraintStart_toEndOf="@id/ivProductIcon"
+                    app:layout_constraintTop_toBottomOf="@id/tvProductName"
+                    tools:text="Precio: $0.0" />
+
+                <LinearLayout
+                    android:id="@+id/counterContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ivProductIcon">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/btnDelete"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:onClick="@{() -> listener.deleteProduct(model)}"
+                        android:visibility="@{Converter.getVisibility(model.count == 1)}"
+                        app:srcCompat="@drawable/ic_delete"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/btnMinus"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:onClick="@{() -> listener.minusCount(model)}"
+                        android:visibility="@{Converter.getVisibility(model.count > 1)}"
+                        app:srcCompat="@drawable/ic_minus"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        style="@style/CartCounterLabel"
+                        android:id="@+id/tvProductCounter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingEnd="@dimen/margin_small"
+                        android:paddingStart="@dimen/margin_small"
+                        android:text="@{model.count.toString()}"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="3" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/btnAdd"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:onClick="@{() -> listener.addCount(model)}"
+                        app:srcCompat="@drawable/ic_add"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
