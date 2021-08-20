@@ -51,7 +51,7 @@
                     tools:srcCompat="@drawable/ic_laptop" />
 
                 <com.google.android.material.textview.MaterialTextView
-                    style="@style/CartTitleLabel"
+                    style="@style/CartTitleLabelLeft"
                     android:id="@+id/tvProductName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
                     tools:text="Nombre del producto"/>
 
                 <com.google.android.material.textview.MaterialTextView
-                    style="@style/CartLabel"
+                    style="@style/CartLabelLeft"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_small"
@@ -104,7 +104,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <com.google.android.material.textview.MaterialTextView
-                        style="@style/CartCounterLabel"
+                        style="@style/CartCounterLabelCenter"
                         android:id="@+id/tvProductCounter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

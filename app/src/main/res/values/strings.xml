@@ -16,4 +16,12 @@
     <string name="text_input_password">Crea tu contraseña</string>
     <string name="text_input_confirm_password">Confirma tu contraseña</string>
     <string name="text_go_cart">Ver carrito</string>
+    <string name="text_error">Error</string>
+    <string name="text_accept">Aceptar</string>
+    <string name="text_cancel">Cancelar</string>
+    <string name="text_ticket_title">Ticket de compra</string>
+    <string name="text_count">Cantidad</string>
+    <string name="text_product">Producto</string>
+    <string name="text_price">Precio</string>
+    <string name="text_buy">Comprar</string>
 </resources>

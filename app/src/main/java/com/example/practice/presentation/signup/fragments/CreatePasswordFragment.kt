@@ -15,8 +15,10 @@ import com.example.practice.databinding.FragmentCreatePasswordBinding
 import com.example.practice.presentation.home.HomeActivity
 import com.example.practice.presentation.signup.viewmodel.SignUpVM
 import com.example.practice.presentation.signup.viewmodel.SignUpVMFactory
+import com.example.practice.utils.AlertUtils
 import com.example.practice.utils.extensions.hide
 import com.example.practice.utils.extensions.show
+import com.example.practice.utils.showLongToast
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -55,19 +57,19 @@ class CreatePasswordFragment : BaseFragment(), View.OnClickListener {
             MainScope().launch {
                 when (val result = signupVM.signupUser()) {
                     is ConnectionState.Success -> {
-                        Toast.makeText(requireContext(), result.response, Toast.LENGTH_LONG).show()
+                        requireContext().showLongToast(result.response)
                         val intent = Intent(requireActivity(), HomeActivity::class.java)
                         startActivity(intent)
                         requireActivity().finish()
                     }
                     is ConnectionState.Error -> {
-                        Toast.makeText(requireContext(), result.response, Toast.LENGTH_LONG).show()
+                        AlertUtils.showErrorAlert(requireContext(), result.response)
                     }
                 }
             }
             binding.loaderContainer.hide()
         } else {
-            Toast.makeText(requireContext(), "Valida tu contraseña.", Toast.LENGTH_LONG).show()
+            requireContext().showLongToast("Valida tu contraseña.")
         }
     }
 

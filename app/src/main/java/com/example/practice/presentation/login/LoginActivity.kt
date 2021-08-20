@@ -12,8 +12,10 @@ import com.example.practice.databinding.ActivityLoginBinding
 import com.example.practice.presentation.home.HomeActivity
 import com.example.practice.presentation.login.viewmodel.LoginVM
 import com.example.practice.presentation.login.viewmodel.LoginVMFactory
+import com.example.practice.utils.AlertUtils
 import com.example.practice.utils.extensions.hide
 import com.example.practice.utils.extensions.show
+import com.example.practice.utils.showLongToast
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -45,13 +47,13 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         MainScope().launch {
             when (val result = loginVM.doLogin()) {
                 is ConnectionState.Success -> {
-                    Toast.makeText(this@LoginActivity, result.response, Toast.LENGTH_LONG).show()
+                    this@LoginActivity.showLongToast(result.response)
                     val intent = Intent(this@LoginActivity, HomeActivity::class.java)
                     startActivity(intent)
                     finish()
                 }
                 is ConnectionState.Error -> {
-                    Toast.makeText(this@LoginActivity, result.response, Toast.LENGTH_LONG).show()
+                    AlertUtils.showErrorAlert(this@LoginActivity, result.response)
                 }
             }
         }

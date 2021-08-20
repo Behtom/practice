@@ -25,7 +25,7 @@
             android:padding="@dimen/margin_large">
 
             <com.google.android.material.textview.MaterialTextView
-                style="@style/TextTitleLabel"
+                style="@style/TextTitleLabelCenter"
                 android:id="@+id/tvEmailTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
                 app:layout_constraintTop_toTopOf="parent"/>
 
             <com.google.android.material.textview.MaterialTextView
-                style="@style/TextLabel"
+                style="@style/TextLabelLeft"
                 android:id="@+id/tvEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

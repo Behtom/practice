@@ -41,6 +41,7 @@ class HomeVM(private val repo: IHomeRepository): ViewModel() {
     fun addProductToCart(product: Product): String {
         return when (val result = repo.addProductToCart(product, _homeListCart)) {
             is OperationState.Success -> {
+                _homeTotal.value = calculateTotal()
                 result.state
             }
             is OperationState.Error -> {

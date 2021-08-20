@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.practice.core.application.BaseApplication
+import com.example.practice.core.base.BaseActivity
 import com.example.practice.core.base.BaseFragment
 import com.example.practice.data.adapters.IAdapterListener
 import com.example.practice.data.adapters.ShoppingCartAdapter
@@ -16,10 +17,11 @@ import com.example.practice.data.firebase.firestore.Product
 import com.example.practice.databinding.FragmentShoppingCartBinding
 import com.example.practice.presentation.home.viewmodel.HomeVM
 import com.example.practice.presentation.home.viewmodel.HomeVMFactory
+import com.example.practice.utils.AlertUtils
 import com.example.practice.utils.showLongToast
 import javax.inject.Inject
 
-class ShoppingCartFragment : BaseFragment(), IAdapterListener<Product> {
+class ShoppingCartFragment : BaseFragment(), IAdapterListener<Product>, View.OnClickListener {
 
     @Inject lateinit var factory: HomeVMFactory
     private lateinit var binding: FragmentShoppingCartBinding
@@ -52,6 +54,7 @@ class ShoppingCartFragment : BaseFragment(), IAdapterListener<Product> {
         binding = FragmentShoppingCartBinding.inflate(inflater, container, false).also {
             it.lifecycleOwner = this
             it.viewModel = homeVM
+            it.onClickListener = this
         }
         return binding.root
     }
@@ -60,6 +63,19 @@ class ShoppingCartFragment : BaseFragment(), IAdapterListener<Product> {
         super.onViewCreated(view, savedInstanceState)
         binding.recyclerview.layoutManager = LinearLayoutManager(requireContext())
         homeVM.homeListCart.observe(viewLifecycleOwner, listObserver)
+    }
+
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            binding.btnBuy.id -> {
+                AlertUtils.showChooseAlert(requireContext(), "Alerta", "¿Deseas comprar estos artículos?") {
+                    (requireActivity() as BaseActivity).nextFragment(
+                        TicketFragment.newInstance(),
+                        TicketFragment.TAG
+                    )
+                }
+            }
+        }
     }
 
     override fun addCount(model: Product) {
@@ -88,14 +104,6 @@ class ShoppingCartFragment : BaseFragment(), IAdapterListener<Product> {
 
     private fun updateAdapter() {
         (binding.recyclerview.adapter as ShoppingCartAdapter).setData(homeVM.homeListCart.value?:listOf())
-    }
-
-    private fun getTotal(): Double {
-        var total = 0.0
-        homeVM.homeListCart.value?.forEach { value ->
-            total += ((value.count ?: 0) * (value.price ?: 0.0))
-        }
-        return total
     }
 
     companion object {

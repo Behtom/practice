@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.example.practice.utils.tools.Converter" />
+
+        <variable
+            name="model"
+            type="com.example.practice.data.firebase.firestore.Product" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/margin_medium">
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/TextLabelRight"
+            android:id="@+id/clColumnLeft"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_big"
+            android:paddingEnd="@dimen/margin_medium"
+            android:paddingStart="0dp"
+            android:text="@{model.count.toString()}"
+            app:layout_constraintEnd_toStartOf="@id/clColumnCenter"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="10"/>
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/TextLabelLeft"
+            android:id="@+id/clColumnCenter"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_small"
+            android:layout_marginStart="@dimen/margin_small"
+            android:text="@{model.name}"
+            app:layout_constraintEnd_toStartOf="@id/clColumnRight"
+            app:layout_constraintStart_toEndOf="@id/clColumnLeft"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Computadora portátil de alta gama"/>
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/TextLabelCenter"
+            android:id="@+id/clColumnRight"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_medium"
+            android:text="@{Converter.amountToString(model.price)}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/clColumnCenter"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="$5,000.00"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
