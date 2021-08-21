@@ -1,6 +1,7 @@
 package com.example.practice.presentation.home.fragments
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,11 +12,12 @@ import com.example.practice.core.application.BaseApplication
 import com.example.practice.core.base.BaseFragment
 import com.example.practice.data.adapters.TicketAdapter
 import com.example.practice.databinding.FragmentTicketBinding
+import com.example.practice.presentation.home.HomeActivity
 import com.example.practice.presentation.home.viewmodel.HomeVM
 import com.example.practice.presentation.home.viewmodel.HomeVMFactory
 import javax.inject.Inject
 
-class TicketFragment : BaseFragment() {
+class TicketFragment : BaseFragment(), View.OnClickListener {
 
     @Inject lateinit var factory: HomeVMFactory
     private lateinit var binding: FragmentTicketBinding
@@ -37,6 +39,7 @@ class TicketFragment : BaseFragment() {
     ): View {
         binding = FragmentTicketBinding.inflate(inflater, container, false).also {
             it.lifecycleOwner = this
+            it.onClickListener = this
             it.viewModel = homeVM
         }
         return binding.root
@@ -47,6 +50,16 @@ class TicketFragment : BaseFragment() {
         binding.ticketItems.layoutManager = LinearLayoutManager(requireContext())
         binding.ticketItems.adapter = TicketAdapter(requireContext()).also {
             it.setData(homeVM.homeListCart.value?:listOf())
+        }
+    }
+
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            binding.btnDone.id -> {
+                val intent = Intent(requireActivity(), HomeActivity::class.java)
+                startActivity(intent)
+                requireActivity().finish()
+            }
         }
     }
 

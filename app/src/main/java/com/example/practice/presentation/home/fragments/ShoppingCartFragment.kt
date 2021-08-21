@@ -68,11 +68,15 @@ class ShoppingCartFragment : BaseFragment(), IAdapterListener<Product>, View.OnC
     override fun onClick(v: View?) {
         when (v?.id) {
             binding.btnBuy.id -> {
-                AlertUtils.showChooseAlert(requireContext(), "Alerta", "¿Deseas comprar estos artículos?") {
-                    (requireActivity() as BaseActivity).nextFragment(
-                        TicketFragment.newInstance(),
-                        TicketFragment.TAG
-                    )
+                if (homeVM.homeListCart.value!!.size > 0) {
+                    AlertUtils.showChooseAlert(requireContext(), "Alerta", "¿Deseas comprar estos artículos?") {
+                        (requireActivity() as BaseActivity).nextFragment(
+                                TicketFragment.newInstance(),
+                                TicketFragment.TAG
+                        )
+                    }
+                } else {
+                    AlertUtils.showErrorAlert(requireContext(), "No existen productos en tu carrito.")
                 }
             }
         }
@@ -95,11 +99,14 @@ class ShoppingCartFragment : BaseFragment(), IAdapterListener<Product>, View.OnC
     }
 
     override fun deleteProduct(model: Product) {
-        if (homeVM.deleteProduct(model)) {
-            updateAdapter()
-        } else {
-            requireContext().showLongToast("No se pudo quitar el producto.")
+        AlertUtils.showChooseAlert(requireContext(), "Eliminar producto", "¿Desea eliminar este produto de su carrito?") {
+            if (homeVM.deleteProduct(model)) {
+                updateAdapter()
+            } else {
+                requireContext().showLongToast("No se pudo quitar el producto.")
+            }
         }
+
     }
 
     private fun updateAdapter() {

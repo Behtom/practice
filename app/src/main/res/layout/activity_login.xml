@@ -25,6 +25,17 @@
             android:layout_height="match_parent"
             android:padding="@dimen/margin_large">
 
+            <androidx.appcompat.widget.AppCompatImageView
+                style="@style/IconTint"
+                android:id="@+id/icLogin"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginTop="@dimen/margin_large"
+                app:srcCompat="@drawable/ic_account"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvLoginTitle" />
+
             <com.google.android.material.textview.MaterialTextView
                 style="@style/TextTitleLabelCenter"
                 android:id="@+id/tvLoginTitle"
@@ -41,7 +52,7 @@
                 android:layout_marginTop="@dimen/margin_xlarge"
                 android:text="@string/text_email"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvLoginTitle" />
+                app:layout_constraintTop_toBottomOf="@id/icLogin" />
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -76,8 +87,11 @@
                 android:id="@+id/inputLayoutPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_large"
                 android:layout_marginTop="@dimen/margin_small"
                 app:passwordToggleEnabled="true"
+                app:layout_constraintVertical_bias="0.0"
+                app:layout_constraintBottom_toTopOf="@id/btnSignIn"
                 app:layout_constraintTop_toBottomOf="@id/tvPasswordLabel">
 
                 <com.google.android.material.textfield.TextInputEditText
