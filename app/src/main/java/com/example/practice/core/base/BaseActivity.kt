@@ -21,7 +21,7 @@ abstract class BaseActivity: AppCompatActivity() {
                     it.arguments = bundle
                 }
             })
-            .addToBackStack(tag)
+            //.addToBackStack(tag)
             .commit()
     }
 }

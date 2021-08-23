@@ -90,6 +90,17 @@
                 android:text="@{viewModel.homeProduct.large_description}"
                 app:layout_constraintTop_toBottomOf="@id/tvCountProduct"/>
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnGoCart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_xlarge"
+                android:onClick="@{onClickListener}"
+                android:text="@string/text_go_cart"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>

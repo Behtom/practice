@@ -11,7 +11,7 @@
 
         <variable
             name="model"
-            type="com.example.practice.data.firebase.firestore.Product" />
+            type="com.example.practice.data.persistence.firestore.Product" />
 
         <variable
             name="position"

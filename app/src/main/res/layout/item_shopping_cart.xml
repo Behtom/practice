@@ -13,7 +13,7 @@
 
         <variable
             name="model"
-            type="com.example.practice.data.firebase.firestore.Product" />
+            type="com.example.practice.data.persistence.firestore.Product" />
 
         <variable
             name="listener"
@@ -65,10 +65,10 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/ivDelete"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
                     android:onClick="@{() -> listener.deleteProduct(model)}"
-                    android:visibility="@{Converter.getVisibility(model.count > 1)}"
+                    android:visibility="@{Converter.getVisibility(model.buy > 1)}"
                     app:srcCompat="@drawable/ic_delete"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -99,7 +99,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:onClick="@{() -> listener.deleteProduct(model)}"
-                        android:visibility="@{Converter.getVisibility(model.count == 1)}"
+                        android:visibility="@{Converter.getVisibility(model.buy == 1)}"
                         app:srcCompat="@drawable/ic_delete"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -110,7 +110,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:onClick="@{() -> listener.minusCount(model)}"
-                        android:visibility="@{Converter.getVisibility(model.count > 1)}"
+                        android:visibility="@{Converter.getVisibility(model.buy > 1)}"
                         app:srcCompat="@drawable/ic_minus"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -122,7 +122,7 @@
                         android:layout_height="wrap_content"
                         android:paddingEnd="@dimen/margin_small"
                         android:paddingStart="@dimen/margin_small"
-                        android:text="@{model.count.toString()}"
+                        android:text="@{model.buy.toString()}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:text="3" />
@@ -133,6 +133,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:onClick="@{() -> listener.addCount(model)}"
+                        android:visibility="@{Converter.getVisibility(model.buy &lt; model.count)}"
                         app:srcCompat="@drawable/ic_add"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />

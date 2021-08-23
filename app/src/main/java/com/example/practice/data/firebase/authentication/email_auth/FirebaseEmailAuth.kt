@@ -16,4 +16,6 @@ class FirebaseEmailAuth @Inject constructor(): IEmailAuthManager {
     override suspend fun signinUser(user: String, pwd: String): Task<AuthResult> {
         return auth.signInWithEmailAndPassword(user, pwd)
     }
+
+    override fun getUserId(): String = auth.currentUser?.uid?:""
 }

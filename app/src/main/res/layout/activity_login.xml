@@ -51,15 +51,27 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_xlarge"
                 android:text="@string/text_email"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@id/inputLayoutUser"
                 app:layout_constraintTop_toBottomOf="@id/icLogin" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivIconUser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_email"
+                app:layout_constraintBottom_toBottomOf="@id/inputLayoutUser"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/inputLayoutUser" />
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:id="@+id/inputLayoutUser"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_small"
                 android:layout_marginTop="@dimen/margin_small"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/ivIconUser"
                 app:layout_constraintTop_toBottomOf="@id/tvUserLabel">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -79,19 +91,31 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_large"
                 android:text="@string/text_password"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@id/inputLayoutPassword"
                 app:layout_constraintTop_toBottomOf="@id/inputLayoutUser" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivIconPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_key"
+                app:layout_constraintBottom_toBottomOf="@id/inputLayoutPassword"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/inputLayoutPassword" />
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:id="@+id/inputLayoutPassword"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_large"
+                android:layout_marginStart="@dimen/margin_small"
                 android:layout_marginTop="@dimen/margin_small"
                 app:passwordToggleEnabled="true"
                 app:layout_constraintVertical_bias="0.0"
                 app:layout_constraintBottom_toTopOf="@id/btnSignIn"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/ivIconPassword"
                 app:layout_constraintTop_toBottomOf="@id/tvPasswordLabel">
 
                 <com.google.android.material.textfield.TextInputEditText

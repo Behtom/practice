@@ -1,9 +1,10 @@
 package com.example.practice.presentation.home.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.practice.data.firebase.firestore.Product
+import com.example.practice.data.persistence.firestore.Product
 import com.example.practice.data.network.ConnectionState
 import com.example.practice.data.network.Response
 import com.example.practice.data.persistence.OperationState
@@ -54,7 +55,7 @@ class HomeVM(private val repo: IHomeRepository): ViewModel() {
         val list = _homeListCart.value?.filter { it.name == product.name }
         return if (!list.isNullOrEmpty()) {
             val index = homeListCart.value?.indexOf(list[0])
-            _homeListCart.value?.set((index?:0), list[0].also { it.count = (it.count?:0)+1 })
+            _homeListCart.value?.set((index?:0), list[0].also { it.buy = (it.buy?:0)+1 })
             _homeTotal.value = calculateTotal()
             true
         } else {
@@ -66,7 +67,7 @@ class HomeVM(private val repo: IHomeRepository): ViewModel() {
         val list = _homeListCart.value?.filter { it.name == product.name }
         return if (!list.isNullOrEmpty()) {
             val index = homeListCart.value?.indexOf(list[0])
-            _homeListCart.value?.set((index?:0), list[0].also { it.count = (it.count?:0)-1 })
+            _homeListCart.value?.set((index?:0), list[0].also { it.buy = (it.buy?:0)-1 })
             _homeTotal.value = calculateTotal()
             true
         } else {
@@ -87,12 +88,12 @@ class HomeVM(private val repo: IHomeRepository): ViewModel() {
     private fun calculateTotal(): Double {
         var total = 0.0
         homeListCart.value?.forEach { value ->
-            total += (value.count?:0)*(value.price?:0.0)
+            total += (value.buy?:0)*(value.price?:0.0)
         }
         return total
     }
 
-    suspend fun getAllProductsFromRemote(): ConnectionState<Response> {
+    suspend fun getAllProductsFromRemote(): ConnectionState<Response<Product>> {
         return withContext(Dispatchers.IO) {
             try {
                 val result = repo.getAllProductsFromRemote().await()
@@ -112,6 +113,41 @@ class HomeVM(private val repo: IHomeRepository): ViewModel() {
                 )
             } catch (e: Exception) {
                 ConnectionState.Error(Response(message = "La consulta falló."), e)
+            }
+        }
+    }
+
+    suspend fun saveShoppingCart(): OperationState<String> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val map = mutableMapOf<String, Product>()
+                for (i in homeListCart.value!!.indices) {
+                    map["producto$i"] = homeListCart.value!![i]
+                }
+                repo.saveShoppingCart(map)
+            } catch (e: Exception) {
+                OperationState.Error("La compra ha fallado.", e)
+            }
+        }
+    }
+
+    suspend fun getShoppingCart(): ConnectionState<Response<Product>> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val result = repo.getShopingCartFromRemote().await()
+                val list = mutableListOf<Product>()
+                for (product in result.data!!.values) {
+                    Log.d("PRACTICE-TEST", "${product as HashMap<String, Product>}")
+                    list.add(product as Product)
+                }
+                ConnectionState.Success(
+                        Response(
+                                list = list,
+                                message = "La consulta se realizó exitosamente."
+                        )
+                )
+            } catch (e: Exception) {
+                ConnectionState.Error(Response(message = "La consulta del ticket falló."), e)
             }
         }
     }

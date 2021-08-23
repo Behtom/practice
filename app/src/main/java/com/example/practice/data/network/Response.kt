@@ -1,11 +1,9 @@
 package com.example.practice.data.network
 
-import com.example.practice.data.firebase.firestore.Product
 import com.google.firebase.firestore.QuerySnapshot
-import java.lang.Exception
 
-data class Response(
+data class Response<out T>(
     val querySnapshot: QuerySnapshot? = null,
-    val list: List<Product>? = null,
+    val list: List<T>? = null,
     val message: String? = null
 )

@@ -6,4 +6,5 @@ import com.google.firebase.auth.AuthResult
 interface IEmailAuthManager {
     suspend fun createUser(user: String, pwd: String): Task<AuthResult>
     suspend fun signinUser(user: String, pwd: String): Task<AuthResult>
+    fun getUserId(): String
 }

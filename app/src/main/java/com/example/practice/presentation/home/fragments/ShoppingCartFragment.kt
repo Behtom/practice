@@ -13,12 +13,15 @@ import com.example.practice.core.base.BaseActivity
 import com.example.practice.core.base.BaseFragment
 import com.example.practice.data.adapters.IAdapterListener
 import com.example.practice.data.adapters.ShoppingCartAdapter
-import com.example.practice.data.firebase.firestore.Product
+import com.example.practice.data.persistence.OperationState
+import com.example.practice.data.persistence.firestore.Product
 import com.example.practice.databinding.FragmentShoppingCartBinding
 import com.example.practice.presentation.home.viewmodel.HomeVM
 import com.example.practice.presentation.home.viewmodel.HomeVMFactory
 import com.example.practice.utils.AlertUtils
 import com.example.practice.utils.showLongToast
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class ShoppingCartFragment : BaseFragment(), IAdapterListener<Product>, View.OnClickListener {
@@ -32,9 +35,7 @@ class ShoppingCartFragment : BaseFragment(), IAdapterListener<Product>, View.OnC
     }
 
     private val listObserver = Observer<MutableList<Product>> { list ->
-        if (list.isNullOrEmpty()) {
-            requireContext().showLongToast("No hay productos en tu carrito.")
-        } else {
+        if (!list.isNullOrEmpty()) {
             binding.recyclerview.adapter = ShoppingCartAdapter(requireContext(), this).also {
                 it.setData(list)
             }
@@ -70,10 +71,19 @@ class ShoppingCartFragment : BaseFragment(), IAdapterListener<Product>, View.OnC
             binding.btnBuy.id -> {
                 if (homeVM.homeListCart.value!!.size > 0) {
                     AlertUtils.showChooseAlert(requireContext(), "Alerta", "¿Deseas comprar estos artículos?") {
-                        (requireActivity() as BaseActivity).nextFragment(
-                                TicketFragment.newInstance(),
-                                TicketFragment.TAG
-                        )
+                        MainScope().launch {
+                            when (val result = homeVM.saveShoppingCart()) {
+                                is OperationState.Success -> {
+                                    (requireActivity() as BaseActivity).nextFragment(
+                                            TicketFragment.newInstance(),
+                                            TicketFragment.TAG
+                                    )
+                                }
+                                is OperationState.Error -> {
+                                    AlertUtils.showErrorAlert(requireContext(), result.state)
+                                }
+                            }
+                        }
                     }
                 } else {
                     AlertUtils.showErrorAlert(requireContext(), "No existen productos en tu carrito.")

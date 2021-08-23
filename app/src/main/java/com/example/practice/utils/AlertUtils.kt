@@ -25,6 +25,7 @@ class AlertUtils {
                 .setNegativeButton(context.getString(R.string.text_cancel)) { dialog, _ ->
                     dialog.dismiss()
                 }
+                .setCancelable(false)
                 .show()
         }
     }

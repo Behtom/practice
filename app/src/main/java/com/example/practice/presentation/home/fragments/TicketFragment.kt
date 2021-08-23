@@ -11,10 +11,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.practice.core.application.BaseApplication
 import com.example.practice.core.base.BaseFragment
 import com.example.practice.data.adapters.TicketAdapter
+import com.example.practice.data.network.ConnectionState
 import com.example.practice.databinding.FragmentTicketBinding
 import com.example.practice.presentation.home.HomeActivity
 import com.example.practice.presentation.home.viewmodel.HomeVM
 import com.example.practice.presentation.home.viewmodel.HomeVMFactory
+import com.example.practice.utils.showLongToast
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class TicketFragment : BaseFragment(), View.OnClickListener {
@@ -47,6 +51,9 @@ class TicketFragment : BaseFragment(), View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        MainScope().launch {
+            homeVM.getShoppingCart()
+        }
         binding.ticketItems.layoutManager = LinearLayoutManager(requireContext())
         binding.ticketItems.adapter = TicketAdapter(requireContext()).also {
             it.setData(homeVM.homeListCart.value?:listOf())

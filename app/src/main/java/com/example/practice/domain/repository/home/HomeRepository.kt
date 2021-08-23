@@ -1,19 +1,21 @@
 package com.example.practice.domain.repository.home
 
 import androidx.lifecycle.MutableLiveData
-import com.example.practice.data.firebase.firestore.FirestoreManager
-import com.example.practice.data.firebase.firestore.Product
+import com.example.practice.data.persistence.IDataManager
+import com.example.practice.data.persistence.firestore.Product
 import com.example.practice.data.persistence.OperationState
 import com.example.practice.data.persistence.Result
 import com.google.android.gms.tasks.Task
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import java.lang.Exception
 import javax.inject.Inject
 
 class HomeRepository @Inject constructor(
-    private val firestoreManager: FirestoreManager
+    private val dataManager: IDataManager
 ): IHomeRepository {
 
     override fun addProductToCart(
@@ -23,7 +25,7 @@ class HomeRepository @Inject constructor(
         val list = persistence.value
         return when {
             list?.none { it.name == product.name } == true -> {
-                list.add(product.also { it.count = 1 })
+                list.add(product.also { it.buy = 1 })
                 OperationState.Success("El producto se ha agregado a tu carrito.")
             }
             list == null -> {
@@ -44,7 +46,20 @@ class HomeRepository @Inject constructor(
     }
 
     override suspend fun getAllProductsFromRemote(): Task<QuerySnapshot> {
-        return withContext(Dispatchers.IO){ firestoreManager.getAllProducts() }
+        return withContext(Dispatchers.IO){ dataManager.getAllProducts() }
+    }
+
+    override suspend fun getShopingCartFromRemote(): Task<DocumentSnapshot> {
+        return withContext(Dispatchers.IO) { dataManager.getShoppingCart() }
+    }
+
+    override suspend fun saveShoppingCart(products: Map<String, Product>): OperationState<String> {
+        return try {
+            dataManager.saveShoppingCart(products).await()
+            OperationState.Success("La compra de tu carrito se ha realizado con éxito.")
+        } catch (e: Exception) {
+            OperationState.Error("La compra de tu carrito no se ha podido finalizar.", e)
+        }
     }
 
     /*override suspend fun insertProduct(product: Products) {

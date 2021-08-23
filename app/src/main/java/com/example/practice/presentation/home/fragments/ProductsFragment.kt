@@ -2,11 +2,9 @@ package com.example.practice.presentation.home.fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.practice.core.application.BaseApplication
@@ -14,7 +12,7 @@ import com.example.practice.core.base.BaseActivity
 import com.example.practice.core.base.BaseFragment
 import com.example.practice.data.adapters.IAdapterListener
 import com.example.practice.data.adapters.ProductAdapter
-import com.example.practice.data.firebase.firestore.Product
+import com.example.practice.data.persistence.firestore.Product
 import com.example.practice.data.network.ConnectionState
 import com.example.practice.databinding.FragmentProductsBinding
 import com.example.practice.presentation.home.viewmodel.HomeVM

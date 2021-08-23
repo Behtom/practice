@@ -9,7 +9,6 @@ import com.example.practice.data.firebase.authentication.email_auth.IEmailAuthMa
 import com.example.practice.databinding.ActivityMainBinding
 import com.example.practice.presentation.login.LoginActivity
 import com.example.practice.presentation.signup.SignUpActivity
-import java.util.prefs.Preferences
 import javax.inject.Inject
 
 class MainActivity : BaseActivity(), View.OnClickListener {
